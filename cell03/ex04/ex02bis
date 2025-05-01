@@ -1,0 +1,86 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link rel="stylesheet" href="calc.css" />
+  <style>
+    .dropdown {
+      display: flex;
+      justify-content: center;
+      margin: auto;
+      margin-top: 100px;
+      height: 50px;
+      width: 500px;
+    }h1 {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    input, select, button {
+      margin: 0 10px;
+      height: 30px;
+    }
+  </style>
+
+  <script>
+    function calculate() {
+      var left = parseFloat(document.getElementById('left').value);
+      var right = parseFloat(document.getElementById('right').value);
+      var operator = document.getElementById('Operator').value;
+
+      let result;
+
+      if (isNaN(left) || left < 0 || isNaN(right) || right < 0) {
+        result = "Error :()";
+      } else if (operator == '+') {
+        result = left + right;
+      } else if (operator == '-') {
+        result = left - right;
+      } else if (operator == '*') {
+        result = left * right;
+      } else if (operator == '%' && right != 0) {
+        result = left % right;
+      } else if (operator == '/' && right != 0) {
+        result = left / right;
+      } else {
+        result = "It's over 9000!";
+      }
+
+      alert(result);
+    }
+
+    function Alertpopup() {
+      alert("Please, use me...");
+    }
+    setInterval(Alertpopup, 30000);
+
+    // jQuery interaction
+    $(document).ready(function () {
+      $('#Operator').on('click', function () {
+        alert('What operation do you want to perform?');
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Simple Calculator</h1>
+  <div class="dropdown">
+    <input type="number" id="left" placeholder="Enter left number" />
+    <select id="Operator">
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="%">%</option>
+      <option value="/">/</option>
+    </select>
+    <input type="number" id="right" placeholder="Enter right number" />
+    <button onclick="calculate()">=</button>
+  </div>
+</body>
+</html>
