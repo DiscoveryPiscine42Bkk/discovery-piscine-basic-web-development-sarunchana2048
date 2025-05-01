@@ -1,0 +1,170 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To Do</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-width: 250px;
+      font-family: sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    #ft_list {
+      background: peru;
+      padding: 30px 40px;
+      text-align: center;
+      color: white;
+    }
+
+    input {
+      margin: 0;
+      border: none;
+      width: 75%;
+      padding: 10px;
+      float: left;
+      font-size: 16px;
+    }
+    new {
+      padding: 10px;
+      width: 25%;
+      background: lightslategray;
+      color: white;
+      float: left;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul li {
+      cursor: pointer;
+      position: relative;
+      padding: 12px 8px 12px 40px;
+      font-size: 18px;
+      background: #eee;
+      transition: 0.2s;
+      user-select: none;
+    }
+
+    ul li:nth-child(odd) {
+      background: white;
+    }
+
+    ul li:hover {
+      background: #ddd;
+    }
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="ft_list">
+    <h2>To do list</h2>
+    <input type="text" id="todoInput" placeholder="Title..." />
+    <span onclick="newElement()" class="new">New</span>
+  </div>
+
+  <ul id="todoList"></ul>
+
+  <script>
+    // jQuery popup interaction
+    $(document).ready(function () {
+      $('#todoInput').on('click', function () {
+        alert('What task would you like to add?');
+      });
+    });
+
+    // Load existing todos
+    window.onload = function () {
+      var saved = getCookie("todos");
+      if (saved) {
+        var todos = JSON.parse(saved);
+        for (var i = 0; i < todos.length; i++) {
+          addTodo(todos[i]);
+        }
+      }
+    };
+
+    function newElement() {
+      var input = document.getElementById("todoInput");
+      var value = input.value.trim();
+
+      if (value === "") {
+        alert("You must write something!");
+        return;
+      }
+
+      addTodo(value);
+      input.value = "";
+      saveTodos();
+    }
+
+    function addTodo(text) {
+      var li = document.createElement("li");
+      var t = document.createTextNode(text);
+      li.appendChild(t);
+
+      var span = document.createElement("span");
+      var closeTxt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(closeTxt);
+      li.appendChild(span);
+
+      span.onclick = function () {
+        li.remove();
+        saveTodos();
+      };
+
+      var list = document.getElementById("todoList");
+      list.insertBefore(li, list.firstChild);
+    }
+    function saveTodos() {
+      var items = document.querySelectorAll("#todoList li");
+      var todos = [];
+
+      for (var i = 0; i < items.length; i++) {
+        var text = items[i].childNodes[0].nodeValue.trim();
+        todos.push(text);
+      }
+
+      document.cookie = "todos=" + JSON.stringify(todos) + "; path=/";
+    }
+
+    function getCookie(name) {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var c = cookies[i].trim();
+        if (c.indexOf(name + "=") === 0) {
+          return c.substring(name.length + 1, c.length);
+        }
+      }
+      return null;
+    }
+  </script>
+</body>
+</html>
