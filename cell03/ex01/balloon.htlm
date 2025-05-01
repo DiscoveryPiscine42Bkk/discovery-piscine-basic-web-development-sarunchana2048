@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="balloon.css">
+    <script>
+        let size = 200;
+        let color = ['red', 'green', 'blue']
+        let colorIndex = 0;
+        function circle(option) {
+        //click
+        if (option == 1) {
+            size += 10;
+            colorIndex++;
+            if (size > 420){
+                size = 200;
+            }
+            if (colorIndex >2){
+                colorIndex = 0;
+            }
+
+        }
+
+        //leave
+        if (option == 2) {
+            size-= 5
+            colorIndex--;
+            if(size<200){
+                size = 200;
+            }
+            if (colorIndex<0){
+                colorIndex = 2;
+            }
+
+        }
+
+        document.getElementById('balloon').style.height = size+'px';
+        document.getElementById('balloon').style.backgroundColor = color[colorIndex];
+
+        }
+
+
+    </script>
+</head>
+<body>
+    <div id="balloon" onclick="circle(1)" onmouseleave="circle(2)">
+        
+    </div>
+</body>
+</html>
