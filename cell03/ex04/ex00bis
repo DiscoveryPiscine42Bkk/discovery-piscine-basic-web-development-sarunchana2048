@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Background Color</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    section {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <button id="colorBtn" type="button">Change Colour</button>
+  </section>
+
+  <script>
+    $(document).ready(function () {
+      $('#colorBtn').click(function () {
+        let color = [];
+        for (let i = 0; i < 3; i++) {
+          color.push(Math.floor(Math.random() * 256));
+        }
+        const bcolor = 'rgb(' + color.join(', ') + ')';
+        $('body').css('background-color', bcolor);
+      });
+    });
+  </script>
+</body>
+</html>
